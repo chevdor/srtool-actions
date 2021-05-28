@@ -1,0 +1,39 @@
+= SRTOOL Github Action
+:toc: right
+
+== Introduction
+
+https://gitlab.com/chevdor/srtool[srtool] is a docker image that allows building Substrate WASM Runtimes in a deterministic manner. It ensures that all `srtool` users (and tooling), using the same/latest tag, will produce 100% exactly the same runtime. It enables further trustless verifications.
+
+image::resources/logo/srtool-gh-action_512px.png[align=center, width=25%]
+
+This repository contains a custom https://docs.github.com/en/actions[Github Action] that will help you integrate `srtool` in your Github CI.
+
+NOTE: Gitlab users are not left behind and can use the 2 first options mentioned below.
+
+== Srtool helpers
+
+There are now several ways to use `srtool` in your project:
+
+- using `srtool` https://gitlab.com/chevdor/srtool#user-content-using-an-alias[via alias]: powerful but very verbose and prompt to errors. This is for developers. This option is being deprecated and not recommended.
+- using the https://gitlab.com/chevdor/srtool-cli[srtool-cli]: much easier to use and removes a whole bunch of potential user's mistakes. This is for developers.
+- using the https://gitlab.com/chevdor/srtool-app[srtool-app]: the easiest option of all thanks to its GUI. This is good for non-developers.
+- using the Github actions from https://github.com/chevdor/srtool-actions[this repo]. This is for your automatic CI.
+
+== Requirements
+
+In order to use this Github Action, you will need a Github repository with your Substrate based project. You can learn how to get started with a first Github workflow https://docs.github.com/en/actions/quickstart[here].
+
+Before you setup your new workflow, you should gather the following information:
+
+- name of your chain: ie. Polkadot
+- runtime package: ie. runtime-polkadot
+- location of your runtime: ie. runtime/polkadot
+
+If your project uses standard values (such as your runtime package being named `runtime_xyz` if your chain is `xyz`), you will be able to skip many of the inputs. If you have a different setup, you can set override the defaults to make it work for you.
+
+== Sample workflows
+
+include::examples/index.adoc[leveloffset=+1]
+
+include::doc/dev-notes.adoc[]

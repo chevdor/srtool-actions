@@ -1,0 +1,176 @@
+name: "Srtool"
+description: "Build WASM Runtime with SRTOOL"
+author: chevdor
+branding:
+  icon: "package"
+  color: "blue"
+
+inputs:
+  chain:
+    description: >
+      Name of the chain, ie. polkadot
+    required: true
+
+  package:
+    description: >
+      Runtime package to build, ie. polkadot-runtime.
+      If your runtime follows this pattern, you don't have and should not provide this input.
+
+      If not provided, it will be set to <chain>-runtime
+    required: false
+
+  image:
+    description: >
+      You can use an alternate image, use with caution!
+    required: true
+    default: "chevdor/srtool"
+
+  tag:
+    description: >
+      Tag of the srtool image to use. Omit to use the latest (recommended)
+    required: false
+
+  workdir:
+    description: >
+      Path of the project, this is where your main Cargo.toml is located. This is relative to $GITHUB_WORKSPACE.
+
+    required: true
+
+  runtime_dir:
+    description: >
+      Location of the runtime in your repo. The default is 'runtime/<chain_name>'
+    required: false
+
+outputs:
+  json:
+    description: >
+      The full json output of srtool. If you need more information than this action provides by default,
+      you can use this json output and extract soem content using 'jq'.
+    value: ${{ steps.build.outputs.json }}
+
+  proposal_hash:
+    description: The proposal hash as it will show on-chain
+    value: ${{ steps.build.outputs.proposal_hash }}
+
+  version:
+    description: The version of srtool
+    value: ${{ steps.build.outputs.version }}
+
+  info:
+    description: Some information from srtool about the current project
+    value: ${{ steps.build.outputs.info }}
+
+  ipfs:
+    description: ipfs hash
+    value: ${{ steps.build.outputs.ipfs }}
+
+  wasm:
+    description: Path of the produced runtime
+    value: ${{ steps.build.outputs.wasm }}
+
+runs:
+  using: "composite"
+  steps:
+    - id: check_latest_srtool
+      name: Check the version of the latest srtool
+      shell: bash
+      run: |
+        LATEST=`curl -s https://gitlab.com/chevdor/srtool/-/raw/master/RUSTC_VERSION`
+        echo "SRTOOL_LATEST=$LATEST" >> $GITHUB_ENV
+
+    - id: env_setup
+      name: Setting Env
+      shell: bash
+      run: |
+        echo ::group::Environment setup
+
+        SRTOOL_TAG=${{ inputs.tag || env.SRTOOL_LATEST }}
+        echo "SRTOOL_TAG=$SRTOOL_TAG" >> $GITHUB_ENV
+        echo "SRTOOL_IMAGE=${{ inputs.image }}:$SRTOOL_TAG" >> $GITHUB_ENV
+        echo "WORKDIR=${{ inputs.workdir || github.workspace }}" >> $GITHUB_ENV
+
+        RUNTIME_DIR=${{ inputs.runtime_dir}}
+        RUNTIME_DIR=${RUNTIME_DIR:-'runtime/'${{ inputs.chain}}}
+        echo "RUNTIME_DIR=$RUNTIME_DIR" >> $GITHUB_ENV
+
+        PACKAGE=${{ inputs.package }}
+        PACKAGE=${PACKAGE:-${{ inputs.chain }}'-runtime'}
+        echo "PACKAGE=$PACKAGE" >> $GITHUB_ENV
+
+        echo ::endgroup
+
+    - id: env_check
+      name: Checking Env
+      shell: bash
+      run: |
+        echo ::group::Environment check
+
+        echo ℹ️ SRTOOL_LATEST: ${{ env.SRTOOL_LATEST }}
+        echo ℹ️ image: ${{ env.SRTOOL_IMAGE }}
+        echo ℹ️ chain: ${{ inputs.chain }}
+        echo ℹ️ package: ${{ env.PACKAGE }}
+        echo ℹ️ workdir: ${{ env.WORKDIR }}
+        echo ℹ️ runtime_dir: ${{ env.RUNTIME_DIR }}
+        echo ℹ️ .git folder: `ls -ald ${{ env.WORKDIR }}/.git`
+        echo ℹ️ Cargo.toml: `ls -al ${{ env.WORKDIR }}/Cargo.toml`
+
+        echo ::endgroup
+
+    - id: pulling_srtool
+      name: Build ${{ env.PACKAGE }} using ${{ env.SRTOOL_IMAGE }}
+      shell: bash
+      run: |
+        echo ::group::Pulling the srtool docker image: ${{ env.SRTOOL_IMAGE }}
+        docker pull ${{ env.SRTOOL_IMAGE }}
+        echo ::endgroup
+
+    - id: version
+      shell: bash
+      run: |
+        echo ::group::Srtool version
+        CMD="docker run -i --rm -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} version -cM"
+        JSON=`$CMD`
+        echo $JSON | jq
+        echo "::set-output name=version::$JSON"
+        echo ::endgroup
+
+    - id: info
+      shell: bash
+      run: |
+        echo ::group::srtool info
+        CMD="docker run -i --rm -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} info -cM"
+        JSON=`$CMD`
+        echo $JSON | jq
+        echo "::set-output name=info::$JSON"
+        echo ::endgroup
+
+    - id: build
+      name: Build ${{ env.PACKAGE }} using ${{ env.SRTOOL_IMAGE }}
+      shell: bash
+      run: |
+        echo ::group::Srtool build of chain ${{ inputs.chain }}
+        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} build --app --json -cM"
+        echo ::debug::build::docker_run $CMD
+
+        # here we keep streaming the progress and fetch the last line for the json result
+        stdbuf -oL $CMD | {
+          while IFS= read -r line
+          do
+            echo ║ $line
+            JSON="$line"
+          done
+          echo ::set-output name=json::$JSON
+          echo $JSON | jq
+
+          PROP=`echo $JSON | jq -r .prop`
+          echo ::set-output name=proposal_hash::$PROP
+
+          WASM=`echo $JSON | jq -r .wasm`
+          echo ::set-output name=wasm::$WASM
+
+          IPFS=`echo $JSON | jq -r .ipfs`
+          echo ::set-output name=ipfs::$IPFS
+
+        }
+
+        echo ::endgroup

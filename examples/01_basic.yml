@@ -1,0 +1,24 @@
+name: Srtool build
+
+on: push
+
+jobs:
+  srtool:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        chain: ["westend"]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Srtool build
+        id: srtool_build
+        uses: chevdor/srtool-actions@draft
+        with:
+          chain: ${{ matrix.chain }}
+      - name: Summary
+        run: |
+          echo Summary:
+          echo - version: ${{ steps.srtool_build.outputs.version }}
+          echo - info: ${{ steps.srtool_build.outputs.info }}
+          echo - json: ${{ steps.srtool_build.outputs.json }}
+          echo - prop: ${{ steps.srtool_build.outputs.proposal_hash }}

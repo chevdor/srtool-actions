@@ -1,0 +1,40 @@
+name: Test CI
+
+# We do NOT want to run this in our repo, since it is not a Substrate chain
+# so there is no chance it can work.
+# We use a "crazy" cron that will only run on the 31st of February...
+on:
+  push: null
+  # schedule:
+  #   - cron: "0 0 5 31 2" # That will not happen often :-p
+
+jobs:
+  srtool:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        chain: ["westend"]
+    steps:
+      - name: Srtool build
+        id: srtool_build
+        uses: ./
+        with:
+          # For now we HAVE to pass all to test due to
+          # a bug in `act`: https://github.com/nektos/act/issues/655
+          chain: ${{ matrix.chain }}
+          package: "runtime-${{ matrix.chain }}"
+          image: chevdor/srtool
+          tag: "nightly-2021-03-15"
+          path: "/projects/polkadot"
+
+      - name: Summary
+        run: |
+          echo Wasm located at ${{ steps.srtool_build.outputs.wasm }}
+  artifacts:
+    needs: srtool
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "runtime.wasm"
+          path: ${{ steps.srtool_build.outputs.wasm }}
