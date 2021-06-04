@@ -7,18 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        chain: ["westend"]
+        chain: ["statemine", "westmint"]
     steps:
       - uses: actions/checkout@v2
       - name: Srtool build
         id: srtool_build
-        uses: chevdor/srtool-actions@draft
+        uses: chevdor/srtool-actions@v0.1.0
         with:
           chain: ${{ matrix.chain }}
+          runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
       - name: Summary
         run: |
-          echo Summary:
-          echo - version: ${{ steps.srtool_build.outputs.version }}
-          echo - info: ${{ steps.srtool_build.outputs.info }}
-          echo - json: ${{ steps.srtool_build.outputs.json }}
-          echo - prop: ${{ steps.srtool_build.outputs.proposal_hash }}
+          echo '${{ steps.srtool_build.outputs.json }}' | jq > ${{ matrix.chain }}-srtool-digest.json
+          cat ${{ matrix.chain }}-srtool-digest.json
+          echo "Runtime location: ${{ steps.srtool_build.outputs.wasm }}"

@@ -26,7 +26,7 @@ In order to use this Github Action, you will need a Github repository with your 
 
 Before you setup your new workflow, you should gather the following information:
 
-- name of your chain: ie. Polkadot
+- name of your chain: ie. polkadot
 - runtime package: ie. runtime-polkadot
 - location of your runtime: ie. runtime/polkadot
 

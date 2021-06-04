@@ -18,7 +18,7 @@ include::02_report.yml[]
 include::03_artifacts.yml[]
 ----
 
-== IPFS
-----
-include::04_ipfs.yml[]
-----
+// == IPFS
+// ----
+// include::04_ipfs.yml[]
+// ----
