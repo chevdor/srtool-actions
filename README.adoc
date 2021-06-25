@@ -30,7 +30,7 @@ Before you setup your new workflow, you should gather the following information:
 - runtime package: ie. runtime-polkadot
 - location of your runtime: ie. runtime/polkadot
 
-If your project uses standard values (such as your runtime package being named `xyz-runtime` if your chain is `xyz`), you will be able to skip many of the inputs. If you have a different setup, you can set override the defaults to make it work for you.
+If your project uses standard values (such as your runtime package being named `xyz-runtime` if your chain is `xyz`), you will be able to skip many of the inputs. If you have a different setup, you can override the defaults to make it work for you.
 
 == Sample workflows
 
