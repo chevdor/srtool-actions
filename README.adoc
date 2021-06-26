@@ -15,7 +15,7 @@ NOTE: Gitlab users are not left behind and can use the 2 first options mentioned
 
 There are now several ways to use `srtool` in your project:
 
-- using `srtool` https://gitlab.com/chevdor/srtool#user-content-using-an-alias[via alias]: powerful but very verbose and prompt to errors. This is for developers. This option is being deprecated and not recommended.
+- using `srtool` https://gitlab.com/chevdor/srtool#user-content-using-an-alias[via alias]: powerful but very verbose and prone to errors. This is for developers. This option is being deprecated and not recommended.
 - using the https://gitlab.com/chevdor/srtool-cli[srtool-cli]: much easier to use and removes a whole bunch of potential user's mistakes. This is for developers.
 - using the https://gitlab.com/chevdor/srtool-app[srtool-app]: the easiest option of all thanks to its GUI. This is good for non-developers.
 - using the Github actions from https://github.com/chevdor/srtool-actions[this repo]. This is for your automatic CI.
@@ -30,7 +30,7 @@ Before you setup your new workflow, you should gather the following information:
 - runtime package: ie. runtime-polkadot
 - location of your runtime: ie. runtime/polkadot
 
-If your project uses standard values (such as your runtime package being named `runtime_xyz` if your chain is `xyz`), you will be able to skip many of the inputs. If you have a different setup, you can set override the defaults to make it work for you.
+If your project uses standard values (such as your runtime package being named `xyz-runtime` if your chain is `xyz`), you will be able to skip many of the inputs. If you have a different setup, you can override the defaults to make it work for you.
 
 == Sample workflows
 
