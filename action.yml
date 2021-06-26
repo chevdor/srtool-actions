@@ -45,7 +45,7 @@ outputs:
   json:
     description: >
       The full json output of srtool. If you need more information than this action provides by default,
-      you can use this json output and extract soem content using 'jq'.
+      you can use this json output and extract some content using 'jq'.
     value: ${{ steps.build.outputs.json }}
 
   proposal_hash:
@@ -130,7 +130,7 @@ runs:
         echo ::group::Srtool version
         CMD="docker run -i --rm -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} version -cM"
         JSON=`$CMD`
-        echo $JSON | jq
+        echo $JSON | jq .
         echo "::set-output name=version::$JSON"
         echo ::endgroup
 
@@ -140,7 +140,7 @@ runs:
         echo ::group::srtool info
         CMD="docker run -i --rm -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} info -cM"
         JSON=`$CMD`
-        echo $JSON | jq
+        echo $JSON | jq .
         echo "::set-output name=info::$JSON"
         echo ::endgroup
 
@@ -160,7 +160,7 @@ runs:
             JSON="$line"
           done
           echo ::set-output name=json::$JSON
-          echo $JSON | jq
+          echo $JSON | jq .
 
           PROP=`echo $JSON | jq -r .prop`
           echo ::set-output name=proposal_hash::$PROP
