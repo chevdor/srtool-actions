@@ -65,8 +65,12 @@ outputs:
     value: ${{ steps.build.outputs.ipfs }}
 
   wasm:
-    description: Path of the produced runtime
+    description: Path of the produced compact runtime
     value: ${{ steps.build.outputs.wasm }}
+
+  wasm_compressed:
+    description: Path of the produced compressed runtime
+    value: ${{ steps.build.outputs.wasm_compressed }}
 
 runs:
   using: "composite"
@@ -162,15 +166,17 @@ runs:
           echo ::set-output name=json::$JSON
           echo $JSON | jq .
 
-          PROP=`echo $JSON | jq -r .prop`
+          PROP=`echo $JSON | jq -r .runtimes.compact.prop`
           echo ::set-output name=proposal_hash::$PROP
 
-          WASM=`echo $JSON | jq -r .wasm`
+          WASM=`echo $JSON | jq -r .runtimes.compact.wasm`
           echo ::set-output name=wasm::$WASM
 
-          IPFS=`echo $JSON | jq -r .ipfs`
-          echo ::set-output name=ipfs::$IPFS
+          Z_WASM=`echo $JSON | jq -r .runtimes.compressed.wasm`
+          echo ::set-output name=wasm_compressed::$Z_WASM
 
+          IPFS=`echo $JSON | jq -r .runtimes.compact.ipfs`
+          echo ::set-output name=ipfs::$IPFS
         }
 
         echo ::endgroup

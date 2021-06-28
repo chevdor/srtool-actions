@@ -1,0 +1,60 @@
+name: Build Polkadot Repo
+on:
+  push:
+    branches:
+      - "*"
+
+  workflow_dispatch:
+    inputs:
+      srtool_tag:
+        description: The SRTOOL tag to use
+        default: 1.53.0
+        required: false
+
+  schedule:
+    - cron: "00 04 * * 1" # 4AM weekly on mondays
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        chain: ["polkadot", "kusama", "westend"]
+
+    name: Build ${{ matrix.chain }}
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          path: action
+
+      - uses: actions/checkout@v2
+        with:
+          repository: paritytech/polkadot
+          fetch-depth: 0
+          path: repo
+
+      - name: debug
+        run: |
+          ls -al
+          pwd
+
+      # - name: Go in the repo
+      #   working-directory: ./repo
+      #   run: pwd
+
+      - name: Srtool build
+        id: srtool_build
+        uses: ./action
+        with:
+          chain: ${{ matrix.chain }}
+          tag: ${{ github.event.inputs.srtool_tag }}
+          # runtime_dir: repo/runtime/${{ matrix.chain }}
+          workdir: "${{ github.workspace }}/repo"
+
+      - name: Summary
+        run: |
+          echo '${{ steps.srtool_build.outputs.json }}' | jq . | tee ${{ matrix.chain }}-srtool-digest.json
+          echo "Compact Runtime location    : ${{ steps.srtool_build.outputs.wasm }}"
+          echo "Compressed Runtime location : ${{ steps.srtool_build.outputs.wasm_compressed }}"
