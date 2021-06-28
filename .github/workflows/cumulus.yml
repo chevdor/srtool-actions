@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        chain: ["polkadot", "kusama", "westend"]
+        chain: ["statemine", "statemint", "westmint", "rococo", "shell"]
 
     name: Build ${{ matrix.chain }}
     steps:
@@ -31,14 +31,9 @@ jobs:
 
       - uses: actions/checkout@v2
         with:
-          repository: paritytech/polkadot
+          repository: paritytech/cumulus
           fetch-depth: 0
           path: repo
-
-      - name: debug
-        run: |
-          ls -al
-          pwd
 
       - name: Srtool build
         id: srtool_build
@@ -46,6 +41,7 @@ jobs:
         with:
           chain: ${{ matrix.chain }}
           tag: ${{ github.event.inputs.srtool_tag }}
+          runtime_dir: polkadot-parachains/${{ matrix.chain }}
           workdir: "${{ github.workspace }}/repo"
 
       - name: Summary
