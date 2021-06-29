@@ -1,5 +1,20 @@
 # SRTOOL Github Action
 
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p><img src="https://github.com/chevdor/srtool-actions/actions/workflows/bridges.yml/badge.svg?branch=master" alt="badge" /></p></td>
+<td style="text-align: left;"><p><img src="https://github.com/chevdor/srtool-actions/actions/workflows/cumulus.yml/badge.svg?branch=master" alt="badge" /></p></td>
+<td style="text-align: left;"><p><img src="https://github.com/chevdor/srtool-actions/actions/workflows/polkadot.yml/badge.svg?branch=master" alt="badge" /></p></td>
+</tr>
+</tbody>
+</table>
+
 ## Introduction
 
 [srtool](https://gitlab.com/chevdor/srtool) is a docker image that allows building Substrate WASM Runtimes in a deterministic manner. It ensures that all `srtool` users (and tooling), using the same/latest tag, will produce 100% exactly the same runtime. It enables further trustless verifications.
