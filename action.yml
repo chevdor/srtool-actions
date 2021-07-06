@@ -23,7 +23,7 @@ inputs:
     description: >
       You can use an alternate image, use with caution!
     required: true
-    default: "chevdor/srtool"
+    default: "paritytech/srtool"
 
   tag:
     description: >
@@ -79,15 +79,29 @@ runs:
       name: Check the version of the latest srtool
       shell: bash
       run: |
-        LATEST=`curl -s https://gitlab.com/chevdor/srtool/-/raw/master/RUSTC_VERSION`
-        echo "SRTOOL_LATEST=$LATEST" >> $GITHUB_ENV
+        RUSTC_VERSION_URL=https://raw.githubusercontent.com/${{ inputs.image }}/master/RUSTC_VERSION
+        echo Fetching RUSTC_VERSION from $RUSTC_VERSION_URL
+        RUSTC_VERSION=`curl -s $RUSTC_VERSION_URL`
+
+        SRTOOL_VERSION_URL=https://raw.githubusercontent.com/${{ inputs.image }}/master/VERSION
+        echo Fetching SRTOOL_VERSION from $SRTOOL_VERSION_URL
+        SRTOOL_VERSION=`curl -s $SRTOOL_VERSION_URL`
+
+        echo "RUSTC_VERSION=$RUSTC_VERSION" >> $GITHUB_ENV
+        echo "SRTOOL_VERSION=$SRTOOL_VERSION" >> $GITHUB_ENV
+        echo "SRTOOL_LATEST=$RUSTC_VERSION" >> $GITHUB_ENV
 
     - id: env_setup
       name: Setting Env
       shell: bash
       run: |
-        echo ::group::Environment setup
+        echo ::group::Debug
+        echo "RUSTC_VERSION=$RUSTC_VERSION"
+        echo "SRTOOL_VERSION=$SRTOOL_VERSION"
+        echo "SRTOOL_LATEST=$RUSTC_VERSION"
+        echo ::endgroup
 
+        echo ::group::Environment setup
         SRTOOL_TAG=${{ inputs.tag || env.SRTOOL_LATEST }}
         echo "SRTOOL_TAG=$SRTOOL_TAG" >> $GITHUB_ENV
         echo "SRTOOL_IMAGE=${{ inputs.image }}:$SRTOOL_TAG" >> $GITHUB_ENV
