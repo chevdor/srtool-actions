@@ -1,4 +1,4 @@
-DEV_IMAGE := "nightly-2021-02-25-dev"
+DEV_IMAGE := "1.53.0"
 
 # List available commands
 default:
