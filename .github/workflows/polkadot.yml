@@ -29,16 +29,12 @@ jobs:
         with:
           path: action
 
-      - uses: actions/checkout@v2
+      - name: Checkout repo under test
+        uses: actions/checkout@v2
         with:
           repository: paritytech/polkadot
           fetch-depth: 0
           path: repo
-
-      - name: debug
-        run: |
-          ls -al
-          pwd
 
       - name: Srtool build
         id: srtool_build
