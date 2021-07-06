@@ -17,7 +17,7 @@
 
 ## Introduction
 
-[srtool](https://gitlab.com/chevdor/srtool) is a docker image that allows building Substrate WASM Runtimes in a deterministic manner. It ensures that all `srtool` users (and tooling), using the same/latest tag, will produce 100% exactly the same runtime. It enables further trustless verifications.
+[srtool](https://github.com/chevdor/srtool) is a docker image that allows building Substrate WASM Runtimes in a deterministic manner. It ensures that all `srtool` users (and tooling), using the same/latest tag, will produce 100% exactly the same runtime. It enables further trustless verifications.
 
 ![srtool gh action 512px](resources/logo/srtool-gh-action_512px.png)
 
@@ -29,11 +29,11 @@ Gitlab users are not left behind and can use the 2 first options mentioned below
 
 There are now several ways to use `srtool` in your project:
 
--   using `srtool` [via alias](https://gitlab.com/chevdor/srtool#user-content-using-an-alias): powerful but very verbose and prone to errors. This is for developers. This option is being deprecated and not recommended.
+-   using `srtool` [via alias](https://github.com/chevdor/srtool#user-content-using-an-alias): powerful but very verbose and prone to errors. This is for developers. This option is being deprecated and not recommended.
 
--   using the [srtool-cli](https://gitlab.com/chevdor/srtool-cli): much easier to use and removes a whole bunch of potential user’s mistakes. This is for developers.
+-   using the [srtool-cli](https://github.com/chevdor/srtool-cli): much easier to use and removes a whole bunch of potential user’s mistakes. This is for developers.
 
--   using the [srtool-app](https://gitlab.com/chevdor/srtool-app): the easiest option of all thanks to its GUI. This is good for non-developers.
+-   using the [srtool-app](https://github.com/chevdor/srtool-app): the easiest option of all thanks to its GUI. This is good for non-developers.
 
 -   using the Github actions from [this repo](https://github.com/chevdor/srtool-actions). This is for your automatic CI.
 
