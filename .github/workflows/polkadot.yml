@@ -1,4 +1,8 @@
 name: Build Polkadot Repo
+
+env:
+  DEFAULT_IMAGE: paritytech/srtool
+
 on:
   push:
     branches:
@@ -45,7 +49,7 @@ jobs:
         id: srtool_build
         uses: ./action
         with:
-          image: ${{ github.event.inputs.srtool_image }}
+          image: ${{ github.event.inputs.srtool_image || env.DEFAULT_IMAGE }}
           tag: ${{ github.event.inputs.srtool_tag }}
           chain: ${{ matrix.chain }}
           workdir: "${{ github.workspace }}/repo"
