@@ -8,6 +8,10 @@ on:
 
   workflow_dispatch:
     inputs:
+      srtool_image:
+        description: The SRTOOL image to use
+        default: paritytech/srtool
+        required: false
       srtool_tag:
         description: The SRTOOL tag to use
         default: 1.53.0
@@ -26,7 +30,6 @@ jobs:
 
     name: Build ${{ matrix.chain }}
     steps:
-
       - uses: actions/checkout@v2
         with:
           path: action
@@ -47,8 +50,9 @@ jobs:
         id: srtool_build
         uses: ./action
         with:
-          chain: ${{ matrix.chain }}
+          image: ${{ github.event.inputs.srtool_image }}
           tag: ${{ github.event.inputs.srtool_tag }}
+          chain: ${{ matrix.chain }}
           runtime_dir: bin/${{ matrix.chain }}/runtime
           workdir: "${{ github.workspace }}/repo"
 
