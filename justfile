@@ -1,5 +1,3 @@
-DEV_IMAGE := "1.53.0"
-
 # List available commands
 default:
   @just --list --unsorted
