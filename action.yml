@@ -167,7 +167,7 @@ runs:
       shell: bash
       run: |
         echo ::group::Srtool build of chain ${{ inputs.chain }}
-        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e BUILD_OPTS=${{ env.BUILD_OPTS }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} build --app --json -cM"
+        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e BUILD_OPTS="${{ env.BUILD_OPTS }}" -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} build --app --json -cM"
         echo ::debug::build::docker_run $CMD
 
         # here we keep streaming the progress and fetch the last line for the json result
