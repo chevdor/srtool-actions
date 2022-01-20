@@ -143,6 +143,16 @@ Make sure you store the yml files shown below in your repository under `.github/
                 ${{ steps.srtool_build.outputs.wasm }}
                 ${{ matrix.chain }}-srtool-digest.json
 
+## Environmental variables
+```
+...
+uses: chevdor/srtool-actions@v*
+env:
+  BUILD_OPTS: --features on-chain-release-build # optional: will be passed to docker srtool run cmd
+with:
+...
+```
+
 ## Dev notes
 
 Due to a [bug in act](https://github.com/nektos/act/issues/655), the defaults defined in the action are not applied. That means **must** pass all the inputs while testing with `act`.
