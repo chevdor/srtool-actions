@@ -148,7 +148,7 @@ Make sure you store the yml files shown below in your repository under `.github/
 ...
 uses: chevdor/srtool-actions@v*
 env:
-  BUILD_OPTS: --features on-chain-release-build # optional: will be passed to docker srtool run cmd
+  BUILD_OPTS: "--features on-chain-release-build" # optional: will be passed to docker srtool run cmd
 with:
 ...
 ```

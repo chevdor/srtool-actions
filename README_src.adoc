@@ -56,7 +56,7 @@ include::doc/dev-notes.adoc[]
     uses: chevdor/srtool-actions@v*
     env:
         # optional: will be passed to docker srtool run cmd
-        BUILD_OPTS: --features on-chain-release-build
+        BUILD_OPTS: "--features on-chain-release-build"
     with:
         ...
 ----
