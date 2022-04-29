@@ -47,16 +47,3 @@ If your project uses standard values (such as your runtime package being named `
 include::examples/index.adoc[leveloffset=+1]
 
 include::doc/dev-notes.adoc[]
-
-== Environmental variables
-
-[source,bash]
-----
-    ...
-    uses: chevdor/srtool-actions@v*
-    env:
-        # optional: will be passed to docker srtool run cmd
-        BUILD_OPTS: "--features on-chain-release-build"
-    with:
-        ...
-----

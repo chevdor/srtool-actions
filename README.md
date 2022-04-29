@@ -73,7 +73,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v2
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.1.0
+            uses: chevdor/srtool-actions@v0.4.0
             with:
               chain: ${{ matrix.chain }}
               runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
@@ -99,7 +99,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v2
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.1.0
+            uses: chevdor/srtool-actions@v0.4.0
             with:
               chain: ${{ matrix.chain }}
           - name: Summary
@@ -126,7 +126,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v2
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.1.0
+            uses: chevdor/srtool-actions@v0.4.0
             with:
               chain: ${{ matrix.chain }}
               runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
@@ -143,15 +143,34 @@ Make sure you store the yml files shown below in your repository under `.github/
                 ${{ steps.srtool_build.outputs.wasm }}
                 ${{ matrix.chain }}-srtool-digest.json
 
-## Environmental variables
-```
-...
-uses: chevdor/srtool-actions@v*
-env:
-  BUILD_OPTS: "--features on-chain-release-build" # optional: will be passed to docker srtool run cmd
-with:
-...
-```
+## Environmental variables and BUILD\_OPTS
+
+    name: Srtool build
+
+    on: push
+
+    jobs:
+      srtool:
+        runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            chain: ["statemine", "westmint"]
+        steps:
+          - uses: actions/checkout@v2
+          - name: Srtool build
+            id: srtool_build
+            uses: chevdor/srtool-actions@v0.1.0
+            env:
+              # optional: will be passed to docker srtool run cmd
+              BUILD_OPTS: "--features on-chain-release-build"
+            with:
+              chain: ${{ matrix.chain }}
+              runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
+          - name: Summary
+            run: |
+              echo '${{ steps.srtool_build.outputs.json }}' | jq . > ${{ matrix.chain }}-srtool-digest.json
+              cat ${{ matrix.chain }}-srtool-digest.json
+              echo "Runtime location: ${{ steps.srtool_build.outputs.wasm }}"
 
 ## Dev notes
 
