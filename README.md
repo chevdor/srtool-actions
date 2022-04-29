@@ -159,7 +159,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v2
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.1.0
+            uses: chevdor/srtool-actions@v0.4.0
             env:
               # optional: will be passed to docker srtool run cmd
               BUILD_OPTS: "--features on-chain-release-build"
