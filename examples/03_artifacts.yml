@@ -9,7 +9,7 @@ jobs:
       matrix:
         chain: ["statemine", "westmint"]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Srtool build
         id: srtool_build
         uses: chevdor/srtool-actions@v0.4.0

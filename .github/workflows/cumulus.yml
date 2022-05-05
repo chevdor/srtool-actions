@@ -34,12 +34,12 @@ jobs:
 
     name: Build ${{ matrix.chain }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           path: action
 
       - name: Checkout repo under test
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: paritytech/cumulus
           fetch-depth: 0

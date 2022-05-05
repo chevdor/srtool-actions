@@ -70,7 +70,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           matrix:
             chain: ["statemine", "westmint"]
         steps:
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
             uses: chevdor/srtool-actions@v0.4.0
@@ -96,7 +96,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           matrix:
             chain: ["westend"]
         steps:
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
             uses: chevdor/srtool-actions@v0.4.0
@@ -123,7 +123,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           matrix:
             chain: ["statemine", "westmint"]
         steps:
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
             uses: chevdor/srtool-actions@v0.4.0
@@ -156,7 +156,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           matrix:
             chain: ["statemine", "westmint"]
         steps:
-          - uses: actions/checkout@v2
+          - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
             uses: chevdor/srtool-actions@v0.4.0
