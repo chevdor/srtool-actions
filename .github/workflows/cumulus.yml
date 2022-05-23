@@ -30,9 +30,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        chain: ["statemine", "statemint", "westmint", "rococo-parachain", "shell"]
-
-    name: Build ${{ matrix.chain }}
+        include:
+            - category: contracts
+              runtime: contracts-rococo
+            - category: assets
+              runtime: statemine
+            - category: assets
+              runtime: statemint
+            - category: starters
+              runtime: shell
+    name: Build ${{ matrix.category }}/${{ matrix.runtime }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -51,12 +58,12 @@ jobs:
         with:
           image: ${{ github.event.inputs.srtool_image || env.DEFAULT_IMAGE }}
           tag: ${{ github.event.inputs.srtool_tag }}
-          chain: ${{ matrix.chain }}
-          runtime_dir: polkadot-parachains/${{ matrix.chain }}
+          chain: ${{ matrix.runtime }}
+          runtime_dir: parachains/runtime/${{ matrix.category }}/${{ matrix.runtime }}
           workdir: "${{ github.workspace }}/repo"
 
       - name: Summary
         run: |
-          echo '${{ steps.srtool_build.outputs.json }}' | jq . | tee ${{ matrix.chain }}-srtool-digest.json
+          echo '${{ steps.srtool_build.outputs.json }}' | jq . | tee ${{ matrix.runtime }}-srtool-digest.json
           echo "Compact Runtime location    : ${{ steps.srtool_build.outputs.wasm }}"
           echo "Compressed Runtime location : ${{ steps.srtool_build.outputs.wasm_compressed }}"
