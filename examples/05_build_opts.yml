@@ -16,6 +16,9 @@ jobs:
         env:
           # optional: will be passed to docker srtool run cmd
           BUILD_OPTS: "--features on-chain-release-build"
+          # optional: will override the parachain pallet and call IDs, see below
+          PARACHAIN_PALLET_ID: 0x1e
+          AUTHORIZE_UPGRADE_PREFIX: 0x02
         with:
           chain: ${{ matrix.chain }}
           runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
@@ -24,3 +27,9 @@ jobs:
           echo '${{ steps.srtool_build.outputs.json }}' | jq . > ${{ matrix.chain }}-srtool-digest.json
           cat ${{ matrix.chain }}-srtool-digest.json
           echo "Runtime location: ${{ steps.srtool_build.outputs.wasm }}"
+
+Similar to https://github.com/chevdor/subwasm[subwasm], the parachain pallet ID and the `authorize_upgrade` call ID can be overriden by `PARACHAIN_PALLET_ID` and `AUTHORIZE_UPGRADE_PREFIX` environmental variables, respectively. It will affect the generated proposal hash `parachain_authorize_upgrade_hash`.
+
+If unset, the two envs will have the following default values:
+- `PARACHAIN_PALLET_ID`:      `0x01`
+- `AUTHORIZE_UPGRADE_PREFIX`: `0x03`
