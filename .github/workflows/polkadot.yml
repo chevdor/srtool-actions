@@ -4,6 +4,9 @@ env:
   DEFAULT_IMAGE: paritytech/srtool
 
 on:
+  pull_request:
+    branches:
+      - master
   push:
     branches:
       - "*"
