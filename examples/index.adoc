@@ -32,3 +32,9 @@ include::03_artifacts.yml[]
 ----
 include::05_build_opts.yml[]
 ----
+
+== Environmental variables and parachain overrides
+[source,yaml]
+----
+include::06_parachain_overrides.yml[]
+----

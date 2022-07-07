@@ -1,0 +1,28 @@
+name: Srtool build
+
+on: push
+
+jobs:
+  srtool:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        chain: ["statemine", "westmint"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Srtool build
+        id: srtool_build
+        uses: chevdor/srtool-actions@v0.4.0
+        env:
+          # optional: will override the parachain pallet ID and authorize_upgrade call ID,
+          #           which will result in a different parachain_authorize_upgrade_hash
+          PARACHAIN_PALLET_ID: 0x1e
+          AUTHORIZE_UPGRADE_PREFIX: 0x02
+        with:
+          chain: ${{ matrix.chain }}
+          runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
+      - name: Summary
+        run: |
+          echo '${{ steps.srtool_build.outputs.json }}' | jq . > ${{ matrix.chain }}-srtool-digest.json
+          cat ${{ matrix.chain }}-srtool-digest.json
+          echo "Runtime location: ${{ steps.srtool_build.outputs.wasm }}"
