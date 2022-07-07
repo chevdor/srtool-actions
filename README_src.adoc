@@ -45,5 +45,7 @@ If your project uses standard values (such as your runtime package being named `
 == Sample workflows
 
 include::examples/index.adoc[leveloffset=+1]
-include::doc/parachain-overrides.adoc[]
+include::doc/parachain-overrides.adoc[leveloffset=+1]
+
+include::CONTRIBUTING.adoc[]
 include::doc/dev-notes.adoc[]

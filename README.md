@@ -73,7 +73,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.4.0
+            uses: chevdor/srtool-actions@v0.5.0
             with:
               chain: ${{ matrix.chain }}
               runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
@@ -99,7 +99,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.4.0
+            uses: chevdor/srtool-actions@v0.5.0
             with:
               chain: ${{ matrix.chain }}
           - name: Summary
@@ -126,7 +126,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.4.0
+            uses: chevdor/srtool-actions@v0.5.0
             with:
               chain: ${{ matrix.chain }}
               runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
@@ -159,7 +159,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.4.0
+            uses: chevdor/srtool-actions@v0.5.0
             env:
               # optional: will be passed to docker srtool run cmd
               BUILD_OPTS: "--features on-chain-release-build"
@@ -188,7 +188,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@master
+            uses: chevdor/srtool-actions@v0.5.0
             env:
               # optional: will override the parachain pallet ID and authorize_upgrade call ID,
               #           which will result in a different parachain_authorize_upgrade_hash
@@ -203,6 +203,8 @@ Make sure you store the yml files shown below in your repository under `.github/
               cat ${{ matrix.chain }}-srtool-digest.json
               echo "Runtime location: ${{ steps.srtool_build.outputs.wasm }}"
 
+## Parachain overrides
+
 Similar to [subwasm](https://github.com/chevdor/subwasm), the parachain pallet ID and the `authorize_upgrade` call ID can be overriden by `PARACHAIN_PALLET_ID` and `AUTHORIZE_UPGRADE_PREFIX` environmental variables, respectively. It will affect the generated proposal hash `parachain_authorize_upgrade_hash`.
 
 If unset, the two envs will have the following default values:
@@ -211,7 +213,15 @@ If unset, the two envs will have the following default values:
 
 -   `AUTHORIZE_UPGRADE_PREFIX`: `0x03`
 
+## Contributing
+
+This project is using `asciidoc` for its documentation. You should **not** edit any mardown file (`.md`) as your changes would be dismissed.
+
+Instead you should be editing the `.adoc` file and the markdown files will be generated. If you create a PR and do not have any of the required tooling, feel free to only edit the `.adoc.` files and I will generate the new `.md`.
+
 ## Dev notes
+
+### Tooling: `act`
 
 Due to a [bug in act](https://github.com/nektos/act/issues/655), the defaults defined in the action are not applied. That means **must** pass all the inputs while testing with `act`.
 

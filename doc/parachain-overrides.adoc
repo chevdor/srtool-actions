@@ -1,4 +1,6 @@
 
+== Parachain overrides
+
 Similar to https://github.com/chevdor/subwasm[subwasm], the parachain pallet ID and the `authorize_upgrade` call ID can be overriden by `PARACHAIN_PALLET_ID` and `AUTHORIZE_UPGRADE_PREFIX` environmental variables, respectively. It will affect the generated proposal hash `parachain_authorize_upgrade_hash`.
 
 If unset, the two envs will have the following default values:

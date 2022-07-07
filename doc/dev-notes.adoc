@@ -1,6 +1,8 @@
 
 == Dev notes
 
+=== Tooling: `act`
+
 WARNING: Due to a https://github.com/nektos/act/issues/655[bug in act], the defaults defined in the action are not applied. That means **must** pass all the inputs while testing with `act`.
 
 You can test locally using https://github.com/nektos/act[act]:
