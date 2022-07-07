@@ -172,6 +172,45 @@ Make sure you store the yml files shown below in your repository under `.github/
               cat ${{ matrix.chain }}-srtool-digest.json
               echo "Runtime location: ${{ steps.srtool_build.outputs.wasm }}"
 
+## Environmental variables and parachain overrides
+
+    name: Srtool build
+
+    on: push
+
+    jobs:
+      srtool:
+        runs-on: ubuntu-latest
+        strategy:
+          matrix:
+            chain: ["statemine", "westmint"]
+        steps:
+          - uses: actions/checkout@v3
+          - name: Srtool build
+            id: srtool_build
+            uses: chevdor/srtool-actions@master
+            env:
+              # optional: will override the parachain pallet ID and authorize_upgrade call ID,
+              #           which will result in a different parachain_authorize_upgrade_hash
+              PARACHAIN_PALLET_ID: 0x1e
+              AUTHORIZE_UPGRADE_PREFIX: 0x02
+            with:
+              chain: ${{ matrix.chain }}
+              runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
+          - name: Summary
+            run: |
+              echo '${{ steps.srtool_build.outputs.json }}' | jq . > ${{ matrix.chain }}-srtool-digest.json
+              cat ${{ matrix.chain }}-srtool-digest.json
+              echo "Runtime location: ${{ steps.srtool_build.outputs.wasm }}"
+
+Similar to [subwasm](https://github.com/chevdor/subwasm), the parachain pallet ID and the `authorize_upgrade` call ID can be overriden by `PARACHAIN_PALLET_ID` and `AUTHORIZE_UPGRADE_PREFIX` environmental variables, respectively. It will affect the generated proposal hash `parachain_authorize_upgrade_hash`.
+
+If unset, the two envs will have the following default values:
+
+-   `PARACHAIN_PALLET_ID`: `0x01`
+
+-   `AUTHORIZE_UPGRADE_PREFIX`: `0x03`
+
 ## Dev notes
 
 Due to a [bug in act](https://github.com/nektos/act/issues/655), the defaults defined in the action are not applied. That means **must** pass all the inputs while testing with `act`.
