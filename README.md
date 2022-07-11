@@ -190,8 +190,9 @@ Make sure you store the yml files shown below in your repository under `.github/
             env:
               # optional: will override the parachain pallet ID and authorize_upgrade call ID,
               #           which will result in a different parachain_authorize_upgrade_hash
-              PARACHAIN_PALLET_ID: 0x1e
-              AUTHORIZE_UPGRADE_PREFIX: 0x02
+              # the hex values must be quoted
+              PARACHAIN_PALLET_ID: "0x1e"
+              AUTHORIZE_UPGRADE_PREFIX: "0x02"
             with:
               chain: ${{ matrix.chain }}
               runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
