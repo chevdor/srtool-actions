@@ -161,7 +161,7 @@ runs:
         CMD="docker run -i --rm -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} version -cM"
         JSON=`$CMD`
         echo $JSON | jq .
-        echo "::set-output name=version::$JSON"
+        echo "version=$JSON" >> $GITHUB_OUTPUT
         echo ::endgroup
 
     - id: info
@@ -171,7 +171,7 @@ runs:
         CMD="docker run -i --rm -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} info -cM"
         JSON=`$CMD`
         echo $JSON | jq .
-        echo "::set-output name=info::$JSON"
+        echo "info=$JSON" >> $GITHUB_OUTPUT
         echo ::endgroup
 
     - id: build
@@ -189,20 +189,21 @@ runs:
             echo ║ $line
             JSON="$line"
           done
-          echo ::set-output name=json::$JSON
+
+          echo "json=$JSON" >> $GITHUB_OUTPUT
           echo $JSON | jq .
 
           PROP=`echo $JSON | jq -r .runtimes.compact.prop`
-          echo ::set-output name=proposal_hash::$PROP
+          echo "proposal_hash=$PROP" >> $GITHUB_OUTPUT
 
           WASM=`echo $JSON | jq -r .runtimes.compact.wasm`
-          echo ::set-output name=wasm::$WASM
+          echo "wasm=$WASM" >> $GITHUB_OUTPUT
 
           Z_WASM=`echo $JSON | jq -r .runtimes.compressed.wasm`
-          echo ::set-output name=wasm_compressed::$Z_WASM
+          echo "wasm_compressed=$Z_WASM" >> $GITHUB_OUTPUT
 
           IPFS=`echo $JSON | jq -r .runtimes.compact.ipfs`
-          echo ::set-output name=ipfs::$IPFS
+          echo "ipfs=$IPFS" >> $GITHUB_OUTPUT
         }
 
         echo ::endgroup
