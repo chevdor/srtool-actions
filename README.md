@@ -7,8 +7,12 @@
 </colgroup>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><p><img src="https://github.com/chevdor/srtool-actions/actions/workflows/cumulus.yml/badge.svg?branch=master" alt="badge" /></p></td>
-<td style="text-align: left;"><p><img src="https://github.com/chevdor/srtool-actions/actions/workflows/polkadot.yml/badge.svg?branch=master" alt="badge" /></p></td>
+<td style="text-align: left;"><figure>
+<img src="https://github.com/chevdor/srtool-actions/actions/workflows/cumulus.yml/badge.svg?branch=master" alt="badge" />
+</figure></td>
+<td style="text-align: left;"><figure>
+<img src="https://github.com/chevdor/srtool-actions/actions/workflows/polkadot.yml/badge.svg?branch=master" alt="badge" />
+</figure></td>
 </tr>
 </tbody>
 </table>
@@ -17,7 +21,9 @@
 
 [srtool](https://github.com/chevdor/srtool) is a docker image that allows building Substrate WASM Runtimes in a deterministic manner. It ensures that all `srtool` users (and tooling), using the same/latest tag, will produce 100% exactly the same runtime. It enables further trustless verifications.
 
-![srtool gh action 512px](resources/logo/srtool-gh-action_512px.png)
+<figure>
+<img src="resources/logo/srtool-gh-action_256px.png" alt="srtool gh action 256px" />
+</figure>
 
 This repository contains a custom [Github Action](https://docs.github.com/en/actions) that will help you integrate `srtool` in your Github CI.
 
@@ -71,7 +77,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.6.0
+            uses: chevdor/srtool-actions@v0.7.0
             with:
               chain: ${{ matrix.chain }}
               runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
@@ -97,7 +103,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.6.0
+            uses: chevdor/srtool-actions@v0.7.0
             with:
               chain: ${{ matrix.chain }}
           - name: Summary
@@ -124,7 +130,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.6.0
+            uses: chevdor/srtool-actions@v0.7.0
             with:
               chain: ${{ matrix.chain }}
               runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
@@ -157,7 +163,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.6.0
+            uses: chevdor/srtool-actions@v0.7.0
             env:
               # optional: will be passed to docker srtool run cmd
               BUILD_OPTS: "--features on-chain-release-build"
@@ -186,7 +192,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.6.0
+            uses: chevdor/srtool-actions@v0.7.0
             env:
               # optional: will override the parachain pallet ID and authorize_upgrade call ID,
               #           which will result in a different parachain_authorize_upgrade_hash

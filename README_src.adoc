@@ -14,7 +14,7 @@ a| image::https://github.com/chevdor/srtool-actions/actions/workflows/polkadot.y
 
 https://github.com/chevdor/srtool[srtool] is a docker image that allows building Substrate WASM Runtimes in a deterministic manner. It ensures that all `srtool` users (and tooling), using the same/latest tag, will produce 100% exactly the same runtime. It enables further trustless verifications.
 
-image::resources/logo/srtool-gh-action_512px.png[align=center, width=25%]
+image::resources/logo/srtool-gh-action_256px.png[align=center, width=20%]
 
 This repository contains a custom https://docs.github.com/en/actions[Github Action] that will help you integrate `srtool` in your Github CI.
 
