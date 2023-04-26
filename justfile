@@ -24,3 +24,8 @@ tag:
   echo "Tagging v$bumped ..."
   git tag "v$bumped"
   git tag | sort -Vr | head -n10
+
+tag_push:
+  #!/usr/bin/env bash
+  latest=$(git tag | sort -Vr | head -n1)
+  git push origin $latest
