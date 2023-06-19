@@ -72,7 +72,7 @@ Make sure you store the yml files shown below in your repository under `.github/
         runs-on: ubuntu-latest
         strategy:
           matrix:
-            chain: ["statemine", "westmint"]
+            chain: ["asset-hub-kusama", "asset-hub-westend"]
         steps:
           - uses: actions/checkout@v3
           - name: Srtool build
@@ -125,7 +125,7 @@ Make sure you store the yml files shown below in your repository under `.github/
         runs-on: ubuntu-latest
         strategy:
           matrix:
-            chain: ["statemine", "westmint"]
+            chain: ["asset-hub-kusama", "asset-hub-westend"]
         steps:
           - uses: actions/checkout@v3
           - name: Srtool build
@@ -158,7 +158,7 @@ Make sure you store the yml files shown below in your repository under `.github/
         runs-on: ubuntu-latest
         strategy:
           matrix:
-            chain: ["statemine", "westmint"]
+            chain: ["asset-hub-kusama", "asset-hub-westend"]
         steps:
           - uses: actions/checkout@v3
           - name: Srtool build
@@ -187,7 +187,7 @@ Make sure you store the yml files shown below in your repository under `.github/
         runs-on: ubuntu-latest
         strategy:
           matrix:
-            chain: ["statemine", "westmint"]
+            chain: ["asset-hub-kusama", "asset-hub-westend"]
         steps:
           - uses: actions/checkout@v3
           - name: Srtool build

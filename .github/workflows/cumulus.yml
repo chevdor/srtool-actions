@@ -37,9 +37,9 @@ jobs:
             - category: contracts
               runtime: contracts-rococo
             - category: assets
-              runtime: statemine
+              runtime: asset-hub-kusama
             - category: assets
-              runtime: statemint
+              runtime: asset-hub-polkadot
             - category: starters
               runtime: shell
     name: Build ${{ matrix.category }}/${{ matrix.runtime }}
