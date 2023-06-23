@@ -21,7 +21,7 @@ on:
         required: false
       srtool_tag:
         description: The SRTOOL tag to use
-        default: 1.69.0
+        default: 1.70.0
         required: false
 
   schedule:
