@@ -2,6 +2,7 @@ name: Manual Build - Moonbeam
 
 env:
   SUBWASM_VERSION: 0.20.0
+  RUST_LOG: subwasm=debug
 
 on:
   workflow_dispatch:
@@ -61,8 +62,6 @@ jobs:
             ${{ matrix.chain }}-srtool-digest.json
 
       - name: Show Runtime information
-        env:
-            RUST_LOG: subwasm=debug
         run: |
           subwasm info ${{ steps.srtool_build.outputs.wasm }}
           subwasm info ${{ steps.srtool_build.outputs.wasm_compressed }}
