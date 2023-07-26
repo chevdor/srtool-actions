@@ -41,6 +41,12 @@ inputs:
       Location of the runtime in your repo. The default is 'runtime/<chain_name>'
     required: false
 
+  profile:
+    description: >
+      Which profile to use with cargo build.
+    required: false
+    default: "release"
+
 outputs:
   json:
     description: >
@@ -179,7 +185,7 @@ runs:
       shell: bash
       run: |
         echo ::group::Srtool build of chain ${{ inputs.chain }}
-        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e PARACHAIN_PALLET_ID -e AUTHORIZE_UPGRADE_PREFIX -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} build --app --json -cM"
+        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e PARACHAIN_PALLET_ID -e AUTHORIZE_UPGRADE_PREFIX -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} build --app --json -cM --profile ${{ inputs.profile }}"
 
         echo ::debug::build::docker_run $CMD
         # here we keep streaming the progress and fetch the last line for the json result
