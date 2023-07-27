@@ -123,6 +123,8 @@ runs:
 
         echo "BUILD_OPTS=${{ env.BUILD_OPTS }}" >> $GITHUB_ENV
 
+        PROFILE=${{ inputs.profile }}
+
         PARACHAIN_PALLET_ID=${{ env.PARACHAIN_PALLET_ID }}
         PARACHAIN_PALLET_ID=${PARACHAIN_PALLET_ID:-0x01}
         AUTHORIZE_UPGRADE_PREFIX=${{ env.AUTHORIZE_UPGRADE_PREFIX }}
@@ -146,6 +148,7 @@ runs:
         echo ℹ️ runtime_dir: ${{ env.RUNTIME_DIR }}
         echo ℹ️ build_opts: ${{ env.BUILD_OPTS }}
         echo ℹ️ parachain_pallet_id: ${{ env.PARACHAIN_PALLET_ID }}
+        echo ℹ️ profile: ${{ env.PROFILE }}
         echo ℹ️ authorize_upgrade_prefix: ${{ env.AUTHORIZE_UPGRADE_PREFIX }}
         echo ℹ️ .git folder: `ls -ald ${{ env.WORKDIR }}/.git`
         echo ℹ️ Cargo.toml: `ls -al ${{ env.WORKDIR }}/Cargo.toml`
@@ -185,7 +188,7 @@ runs:
       shell: bash
       run: |
         echo ::group::Srtool build of chain ${{ inputs.chain }}
-        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e PARACHAIN_PALLET_ID -e AUTHORIZE_UPGRADE_PREFIX -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} build --app --json -cM --profile ${{ inputs.profile }}"
+        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e PARACHAIN_PALLET_ID -e AUTHORIZE_UPGRADE_PREFIX -e PROFILE -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} build --app --json -cM"
 
         echo ::debug::build::docker_run $CMD
         # here we keep streaming the progress and fetch the last line for the json result
