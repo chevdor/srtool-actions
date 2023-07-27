@@ -124,6 +124,7 @@ runs:
         echo "BUILD_OPTS=${{ env.BUILD_OPTS }}" >> $GITHUB_ENV
 
         PROFILE=${{ inputs.profile }}
+        echo "PROFILE=$PROFILE" >> $GITHUB_ENV
 
         PARACHAIN_PALLET_ID=${{ env.PARACHAIN_PALLET_ID }}
         PARACHAIN_PALLET_ID=${PARACHAIN_PALLET_ID:-0x01}
