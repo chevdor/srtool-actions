@@ -56,7 +56,7 @@ jobs:
           tag: ${{ github.event.inputs.srtool_tag }}
           chain: ${{ matrix.chain }}
           workdir: "${{ github.workspace }}/repo"
-          profile: "not-existent"
+          profile: ${{ matrix.chain }}
 
       - name: Summary
         run: |
