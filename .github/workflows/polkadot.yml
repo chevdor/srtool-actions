@@ -56,7 +56,7 @@ jobs:
           tag: ${{ github.event.inputs.srtool_tag }}
           chain: ${{ matrix.chain }}
           workdir: "${{ github.workspace }}/repo"
-          profile: ${{ matrix.chain }}
+          profile: "production"
 
       - name: Summary
         run: |
