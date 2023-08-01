@@ -41,6 +41,11 @@ inputs:
       Location of the runtime in your repo. The default is 'runtime/<chain_name>'
     required: false
 
+  rustc_version:
+    description: >
+      Custom rustc version send to srtool container, if not set defualt use srtool images bundled version
+    required: false
+
 outputs:
   json:
     description: >
@@ -79,9 +84,14 @@ runs:
       name: Check the version of the latest srtool
       shell: bash
       run: |
-        RUSTC_VERSION_URL=https://raw.githubusercontent.com/${{ inputs.image }}/master/RUSTC_VERSION
-        echo Fetching RUSTC_VERSION from $RUSTC_VERSION_URL
-        RUSTC_VERSION=`curl -s $RUSTC_VERSION_URL`
+        RUSTC_VERSION="${{ inputs.rustc_version }}"
+        if [[ -z "${RUSTC_VERSION}" ]]; then
+          RUSTC_VERSION_URL=https://raw.githubusercontent.com/${{ inputs.image }}/master/RUSTC_VERSION
+          echo Fetching RUSTC_VERSION from $RUSTC_VERSION_URL
+          RUSTC_VERSION=`curl -s $RUSTC_VERSION_URL`
+        else
+          echo Use Custom RUSTC_VERSION=$RUSTC_VERSION
+        fi
 
         SRTOOL_VERSION_URL=https://raw.githubusercontent.com/${{ inputs.image }}/master/VERSION
         echo Fetching SRTOOL_VERSION from $SRTOOL_VERSION_URL
@@ -179,7 +189,17 @@ runs:
       shell: bash
       run: |
         echo ::group::Srtool build of chain ${{ inputs.chain }}
-        CMD="docker run -i --rm -e PACKAGE=${{ env.PACKAGE }} -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} -e BUILD_OPTS -e PARACHAIN_PALLET_ID -e AUTHORIZE_UPGRADE_PREFIX -v ${{ env.WORKDIR }}:/build ${{ env.SRTOOL_IMAGE }} build --app --json -cM"
+        CMD="
+          docker run -i --rm 
+          -e PACKAGE=${{ env.PACKAGE }} 
+          -e RUNTIME_DIR=${{ env.RUNTIME_DIR }} 
+          -e BUILD_OPTS 
+          -e PARACHAIN_PALLET_ID 
+          -e AUTHORIZE_UPGRADE_PREFIX 
+          -e RUSTC_VERSION
+          -v ${{ env.WORKDIR }}:/build 
+          ${{ env.SRTOOL_IMAGE }} build --app --json -cM
+        "
 
         echo ::debug::build::docker_run $CMD
         # here we keep streaming the progress and fetch the last line for the json result
