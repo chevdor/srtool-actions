@@ -5,13 +5,13 @@ env:
 
 on:
   pull_request:
-    branches:
-      - master
+    types: [opened, reopened, synchronize]
+
   push:
-    branches:
-      - "*"
     tags:
       - "v*"
+    branches:
+      - master
 
   workflow_dispatch:
     inputs:
