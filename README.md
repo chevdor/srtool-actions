@@ -216,7 +216,7 @@ If unset, the two envs will have the following default values:
 
 -   `PARACHAIN_PALLET_ID`: `0x01`
 
--   `AUTHORIZE_UPGRADE_PREFIX`: `0x03`
+-   `AUTHORIZE_UPGRADE_PREFIX`: `0x02`
 
 ## Contributing
 
