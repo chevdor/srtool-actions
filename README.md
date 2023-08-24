@@ -77,7 +77,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.7.0
+            uses: chevdor/srtool-actions@v0.8.0
             with:
               chain: ${{ matrix.chain }}
               runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
@@ -103,7 +103,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.7.0
+            uses: chevdor/srtool-actions@v0.8.0
             with:
               chain: ${{ matrix.chain }}
           - name: Summary
@@ -130,7 +130,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.7.0
+            uses: chevdor/srtool-actions@v0.8.0
             with:
               chain: ${{ matrix.chain }}
               runtime_dir: polkadot-parachains/${{ matrix.chain }}-runtime
@@ -163,7 +163,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.7.0
+            uses: chevdor/srtool-actions@v0.8.0
             env:
               # optional: will be passed to docker srtool run cmd
               BUILD_OPTS: "--features on-chain-release-build"
@@ -192,7 +192,7 @@ Make sure you store the yml files shown below in your repository under `.github/
           - uses: actions/checkout@v3
           - name: Srtool build
             id: srtool_build
-            uses: chevdor/srtool-actions@v0.7.0
+            uses: chevdor/srtool-actions@v0.8.0
             env:
               # optional: will override the parachain pallet ID and authorize_upgrade call ID,
               #           which will result in a different parachain_authorize_upgrade_hash
