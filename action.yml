@@ -33,13 +33,19 @@ inputs:
   workdir:
     description: >
       Path of the project, this is where your main Cargo.toml is located. This is relative to $GITHUB_WORKSPACE.
-
-    required: true
+    default: "."
+    required: false
 
   runtime_dir:
     description: >
       Location of the runtime in your repo. The default is 'runtime/<chain_name>'
     required: false
+
+  profile:
+    description: >
+      Which profile to use with cargo build.
+    required: false
+    default: "release"
 
   rustc_version:
     description: >
@@ -127,10 +133,13 @@ runs:
 
         echo "BUILD_OPTS=${{ env.BUILD_OPTS }}" >> $GITHUB_ENV
 
+        PROFILE=${{ inputs.profile }}
+        echo "PROFILE=$PROFILE" >> $GITHUB_ENV
+
         PARACHAIN_PALLET_ID=${{ env.PARACHAIN_PALLET_ID }}
         PARACHAIN_PALLET_ID=${PARACHAIN_PALLET_ID:-0x01}
         AUTHORIZE_UPGRADE_PREFIX=${{ env.AUTHORIZE_UPGRADE_PREFIX }}
-        AUTHORIZE_UPGRADE_PREFIX=${AUTHORIZE_UPGRADE_PREFIX:-0x03}
+        AUTHORIZE_UPGRADE_PREFIX=${AUTHORIZE_UPGRADE_PREFIX:-0x02}
         echo "PARACHAIN_PALLET_ID=$PARACHAIN_PALLET_ID" >> $GITHUB_ENV
         echo "AUTHORIZE_UPGRADE_PREFIX=$AUTHORIZE_UPGRADE_PREFIX" >> $GITHUB_ENV
 
@@ -150,6 +159,7 @@ runs:
         echo ℹ️ runtime_dir: ${{ env.RUNTIME_DIR }}
         echo ℹ️ build_opts: ${{ env.BUILD_OPTS }}
         echo ℹ️ parachain_pallet_id: ${{ env.PARACHAIN_PALLET_ID }}
+        echo ℹ️ profile: ${{ env.PROFILE }}
         echo ℹ️ authorize_upgrade_prefix: ${{ env.AUTHORIZE_UPGRADE_PREFIX }}
         echo ℹ️ .git folder: `ls -ald ${{ env.WORKDIR }}/.git`
         echo ℹ️ Cargo.toml: `ls -al ${{ env.WORKDIR }}/Cargo.toml`
@@ -197,6 +207,7 @@ runs:
           -e PARACHAIN_PALLET_ID 
           -e AUTHORIZE_UPGRADE_PREFIX 
           -e RUSTC_VERSION
+          -e PROFILE
           -v ${{ env.WORKDIR }}:/build 
           ${{ env.SRTOOL_IMAGE }} build --app --json -cM
         "

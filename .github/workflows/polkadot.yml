@@ -5,13 +5,13 @@ env:
 
 on:
   pull_request:
-    branches:
-      - master
+    types: [opened, reopened, synchronize]
+
   push:
-    branches:
-      - "*"
     tags:
       - "v*"
+    branches:
+      - master
 
   workflow_dispatch:
     inputs:
@@ -56,6 +56,7 @@ jobs:
           tag: ${{ github.event.inputs.srtool_tag }}
           chain: ${{ matrix.chain }}
           workdir: "${{ github.workspace }}/repo"
+          profile: "production"
 
       - name: Summary
         run: |
