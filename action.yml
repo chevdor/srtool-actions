@@ -148,7 +148,7 @@ runs:
         echo ℹ️ Github Workspace: ${{ github.workspace }}
         echo ℹ️ workdir: ${{ env.WORKDIR }}
         echo ℹ️ runtime_dir: ${{ env.RUNTIME_DIR }}
-        echo ℹ️ build_opts: ${{ env.BUILD_OPTS || "none" }}
+        echo ℹ️ build_opts: ${{ env.BUILD_OPTS }}
         echo ℹ️ parachain_pallet_id: ${{ env.PARACHAIN_PALLET_ID }}
         echo ℹ️ profile: ${{ env.PROFILE }}
         echo ℹ️ authorize_upgrade_prefix: ${{ env.AUTHORIZE_UPGRADE_PREFIX }}
