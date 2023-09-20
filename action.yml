@@ -111,10 +111,10 @@ runs:
         SRTOOL_TAG=${{ inputs.tag || env.SRTOOL_LATEST }}
         echo "SRTOOL_TAG=$SRTOOL_TAG" >> $GITHUB_ENV
         echo "SRTOOL_IMAGE=${{ inputs.image }}:$SRTOOL_TAG" >> $GITHUB_ENV
-        echo "WORKDIR=${{ inputs.workdir || github.workspace }}" >> $GITHUB_ENV
+        echo "WORKDIR=${{ github.workspace }}/${{ inputs.workdir }}" >> $GITHUB_ENV
 
-        RUNTIME_DIR=${{ inputs.runtime_dir}}
-        RUNTIME_DIR=${RUNTIME_DIR:-'runtime/'${{ inputs.chain}}}
+        RUNTIME_DIR=${{ inputs.runtime_dir }}
+        RUNTIME_DIR=${RUNTIME_DIR:-'runtime/'${{ inputs.chain }}}
         echo "RUNTIME_DIR=$RUNTIME_DIR" >> $GITHUB_ENV
 
         PACKAGE=${{ inputs.package }}
