@@ -105,7 +105,7 @@ runs:
         echo "RUSTC_VERSION=$RUSTC_VERSION"
         echo "SRTOOL_VERSION=$SRTOOL_VERSION"
         echo "SRTOOL_LATEST=$RUSTC_VERSION"
-        echo ::endgroup
+        echo ::endgroup::
 
         echo ::group::Environment setup
         SRTOOL_TAG=${{ inputs.tag || env.SRTOOL_LATEST }}
@@ -133,7 +133,7 @@ runs:
         echo "PARACHAIN_PALLET_ID=$PARACHAIN_PALLET_ID" >> $GITHUB_ENV
         echo "AUTHORIZE_UPGRADE_PREFIX=$AUTHORIZE_UPGRADE_PREFIX" >> $GITHUB_ENV
 
-        echo ::endgroup
+        echo ::endgroup::
 
     - id: env_check
       name: Checking Env
@@ -155,7 +155,7 @@ runs:
         echo ℹ️ .git folder: `ls -ald ${{ env.WORKDIR }}/.git`
         echo ℹ️ Cargo.toml: `ls -al ${{ env.WORKDIR }}/Cargo.toml`
 
-        echo ::endgroup
+        echo ::endgroup::
 
     - id: pulling_srtool
       name: Build ${{ env.PACKAGE }} using ${{ env.SRTOOL_IMAGE }}
@@ -163,7 +163,7 @@ runs:
       run: |
         echo ::group::Pulling the srtool docker image: ${{ env.SRTOOL_IMAGE }}
         docker pull ${{ env.SRTOOL_IMAGE }}
-        echo ::endgroup
+        echo ::endgroup::
 
     - id: version
       shell: bash
@@ -173,7 +173,7 @@ runs:
         JSON=`$CMD`
         echo $JSON | jq .
         echo "version=$JSON" >> $GITHUB_OUTPUT
-        echo ::endgroup
+        echo ::endgroup::
 
     - id: info
       shell: bash
@@ -183,7 +183,7 @@ runs:
         JSON=`$CMD`
         echo $JSON | jq .
         echo "info=$JSON" >> $GITHUB_OUTPUT
-        echo ::endgroup
+        echo ::endgroup::
 
     - id: build
       name: Build ${{ env.PACKAGE }} using ${{ env.SRTOOL_IMAGE }}
@@ -216,4 +216,4 @@ runs:
           IPFS=`echo $JSON | jq -r .runtimes.compact.ipfs`
           echo "ipfs=$IPFS" >> $GITHUB_OUTPUT
         }
-        echo ::endgroup
+        echo ::endgroup::
