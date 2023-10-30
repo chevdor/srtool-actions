@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        chain: ["polkadot", "kusama", "westend"]
+        chain: ["westend", "rococo"]
 
     name: Build ${{ matrix.chain }}
     steps:
@@ -44,9 +44,9 @@ jobs:
       - name: Checkout repo under test
         uses: actions/checkout@93ea575cb5d8a053eaa0ac8fa3b40d7e05a33cc8 # v3.1.0
         with:
-          repository: paritytech/polkadot
+          repository: paritytech/polkadot-sdk
           fetch-depth: 0
-          path: repo
+          path: sdk
 
       - name: Srtool build
         id: srtool_build
@@ -55,7 +55,7 @@ jobs:
           image: ${{ github.event.inputs.srtool_image || env.DEFAULT_IMAGE }}
           tag: ${{ github.event.inputs.srtool_tag }}
           chain: ${{ matrix.chain }}
-          workdir: "${{ github.workspace }}/repo"
+          workdir: "${{ github.workspace }}/sdk"
           profile: "production"
 
       - name: Summary
