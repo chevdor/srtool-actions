@@ -56,6 +56,7 @@ jobs:
           tag: ${{ github.event.inputs.srtool_tag }}
           chain: ${{ matrix.chain }}
           workdir: "${{ github.workspace }}/sdk"
+          runtime_dir: polkadot/runtime/${{ matrix.chain }}
           profile: "production"
 
       - name: Summary
