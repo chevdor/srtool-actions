@@ -1,4 +1,4 @@
-name: Build Polkadot Repo
+name: Build Polkadot SDK Repo
 
 env:
   DEFAULT_IMAGE: paritytech/srtool

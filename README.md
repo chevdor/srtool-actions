@@ -1,21 +1,8 @@
 # SRTOOL Github Action
 
-<table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;"><figure>
-<img src="https://github.com/chevdor/srtool-actions/actions/workflows/cumulus.yml/badge.svg?branch=master" alt="badge" />
-</figure></td>
-<td style="text-align: left;"><figure>
-<img src="https://github.com/chevdor/srtool-actions/actions/workflows/polkadot.yml/badge.svg?branch=master" alt="badge" />
-</figure></td>
-</tr>
-</tbody>
-</table>
+<figure>
+<img src="https://github.com/chevdor/srtool-actions/actions/workflows/polkadot-sdk.yml/badge.svg?branch=master" alt="badge" />
+</figure>
 
 ## Introduction
 

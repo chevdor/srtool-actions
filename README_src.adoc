@@ -1,14 +1,7 @@
 = SRTOOL Github Action
 :toc: right
 
-[cols="1,1"]
-[frame=none]
-[grid=none]
-|===
-a| image::https://github.com/chevdor/srtool-actions/actions/workflows/cumulus.yml/badge.svg?branch=master[link="https://github.com/chevdor/srtool-actions/actions/workflows/cumulus.yml"]
-a| image::https://github.com/chevdor/srtool-actions/actions/workflows/polkadot.yml/badge.svg?branch=master[link="https://github.com/chevdor/srtool-actions/actions/workflows/polkadot.yml"]
-|===
-
+image::https://github.com/chevdor/srtool-actions/actions/workflows/polkadot-sdk.yml/badge.svg?branch=master[link="https://github.com/chevdor/srtool-actions/actions/workflows/polkadot-sdk.yml"]
 
 == Introduction
 
