@@ -22,8 +22,8 @@ inputs:
   image:
     description: >
       You can use an alternate image, use with caution!
-    required: true
     default: "paritytech/srtool"
+    required: true
 
   tag:
     description: >
@@ -85,6 +85,11 @@ runs:
       name: Check the version of the latest srtool
       shell: bash
       run: |
+        echo ::group::Inputs
+        echo "- image: ${{ inputs.image }}""
+        echo "- chain: ${{ inputs.chain }}""
+        echo ::endgroup::
+
         RUSTC_VERSION_URL=https://raw.githubusercontent.com/${{ inputs.image }}/master/RUSTC_VERSION
         echo Fetching RUSTC_VERSION from $RUSTC_VERSION_URL
         RUSTC_VERSION=`curl -s $RUSTC_VERSION_URL`
