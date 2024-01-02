@@ -86,8 +86,8 @@ runs:
       shell: bash
       run: |
         echo ::group::Inputs
-        echo "- image: ${{ inputs.image }}""
-        echo "- chain: ${{ inputs.chain }}""
+        echo "- image: ${{ inputs.image }}"
+        echo "- chain: ${{ inputs.chain }}"
         echo ::endgroup::
 
         RUSTC_VERSION_URL=https://raw.githubusercontent.com/${{ inputs.image }}/master/RUSTC_VERSION
